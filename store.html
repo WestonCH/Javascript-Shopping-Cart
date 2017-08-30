@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<!-- Written with HTML, CSS and Javascript -->
+
+<head>
+    <title>Motley Coders | Store</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript">
+        var cart;
+        //array to store items
+        var items = new Array();
+        items[0] = {
+            name: "Greatest Hits CD",
+            price: 10
+        };
+        items[1] = {
+            name: "Girls CD",
+            price: 10
+        };
+        items[2] = {
+            name: "Devil Tee",
+            price: 20
+        };
+        items[3] = {
+            name: "Mask Tee",
+            price: 20
+        };
+        items[4] = {
+            name: "Devil Crewneck",
+            price: 25
+        };
+        items[5] = {
+            name: "Tour Poster",
+            price: 9
+        };
+        items[6] = {
+            name: "Motley Skate Deck",
+            price: 60
+        };
+        items[7] = {
+            name: "Motley Girls Tank",
+            price: 20
+        };
+        items[8] = {
+            name: "Motley Baseball Cap",
+            price: 12
+        };
+
+
+        function addToCart(itemIndex) { //add to cart function
+            cart.add(itemIndex);
+            cart.display();
+        }
+
+        function removeItem(itemIndex) { //remove item from cart
+            cart.remove(itemIndex);
+            cart.display();
+        }
+
+        function removeAll(itemIndex) { //removes all items from cart
+            var n;
+            for (n = 0; n < cart.quantities.length; ++n) {
+                cart.quantities[n] = 0;
+            }
+            cart.display();
+        }
+
+        function Cart(holder, items) {
+            this.holder = holder;
+            this.items = items;
+            this.quantities = Array();
+            for (var i = 0; i < items.length; i++)
+                this.quantities[i] = 0;
+
+            this.add = function(index) {
+                this.quantities[index]++;
+            }
+            this.remove = function(index) {
+                if (this.quantities[index] > 0)
+                    this.quantities[index]--;
+            }
+
+
+
+            //display cart
+            this.display = function() {
+                this.holder.innerHTML = "";
+                this.totalprice = 0;
+                for (var i = 0; i < this.quantities.length; i++) {
+                    if (this.quantities[i] > 0) {
+                        this.totalprice += this.quantities[i] * this.items[i]["price"]; //
+                        var elm = document.createElement('div');
+                        elm.innerHTML = "<span class='name'>" + this.items[i]["name"] + " \</span><span class='quantity'>Quantity: " + this.quantities[i] + "</span>";
+                        this.holder.insertBefore(elm, null);
+                    }
+                }
+                var elm = document.createElement('div');
+                elm.innerHTML = "<span class='price'>Total Price: $" + this.totalprice + " </span>";
+                this.holder.insertBefore(elm, null);
+                document.getElementById('quantities').value = cart.quantities;
+                document.getElementById('items').value = cart.items;
+            }
+        }
+    </script>
+
+    <!-- Position of the cart opacity: 0.9; -->
+    <style>
+        div.fixed {
+            position: fixed;
+            bottom: 350px;
+            right: 0;
+            width: 300px;
+            border: 3px solid #8A2BE2;
+            background-color: black;
+        }
+
+
+        .pic {
+            width: 200px;
+            height: 200px;
+        }
+
+        .zoom {
+            position: absolute;
+            width: 0px;
+            -webkit-transition: width 0.1s linear 0s;
+            transition: width 0.1s linear 0s;
+            z-index: 10;
+        }
+
+        .pic:hover+.zoom {
+            width: 300px;
+        }
+    </style>
+    <!--end of style -->
+</head>
+
+<body>
+    <nav>
+        <!--Navigation -->
+        <ul class="topnav" id="myTopnav">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="news.html">News</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="songs.html">Songs</a></li>
+            <li><a href="tour.html">Tour Dates</a></li>
+            <li><a href="store.html">Store</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="icon"><a href="javascript:void(0);" onclick="myFunction()">&#9776;</a>
+            </li>
+        </ul>
+    </nav>
+    <h1 align="center">Motley Coders Webstore</h1>
+    <!-- tr = table row, th = table header, td = table data/cell -->
+    <table style="width:95%">
+        <tr>
+            <!-- beginning of table row -->
+            <th><img class="pic" img src="../Store Images/cd1.png"><img class="zoom" img src="../Store Images/cd1zoom.png"></th>
+            <th><img class="pic" img src="../Store Images/cd2.png"><img class="zoom" img src="../Store Images/cd2zoom.png"></th>
+            <th><img class="pic" img src="../Store Images/shirt1.png "><img class="zoom" img src="../Store Images/shirt1zoom.png"></th>
+        </tr>
+        <!-- end of table row -->
+        <tr>
+            <td>
+                Motley Coders "Greatest Hits" CD
+            </td>
+            <td>
+                Motley Coders "Girls, Girls, Girls" CD
+            </td>
+            <td>
+                Motley Coders Devil Tee
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Released 2009.
+            </td>
+            <td>
+                Released 1987.
+            </td>
+            <td>
+                Made from high quality fabric.
+            </td>
+        </tr>
+        <tr>
+            <td>$10</td>
+            <td>$10</td>
+            <td>$20</td>
+            <tr>
+                <td><button onclick="addToCart(0)" style="color:black">Add to Cart</button></td>
+                <td><button onclick="addToCart(1)" style="color:black">Add to Cart</button></td>
+                <td><button onclick="addToCart(2)" style="color:black">Add to Cart</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" onclick="removeItem(0)" style="color:black">Remove</button></td>
+                <td><button type="button" onclick="removeItem(1)" style="color:black">Remove</button></td>
+                <td><button type="button" onclick="removeItem(2)" style="color:black">Remove</button>
+            </tr>
+            <tr>
+                <th>
+                    <br>
+                    <img class="pic" style=height:300px;width:220px; img src="../Store Images/shirt2.png">
+                    <img class="zoom" img src="../Store Images/shirt2zoom.png">
+                </th>
+                <th>
+                    <img class="pic" img src="../Store Images/shirt4.png"><img class="zoom" img src="../Store Images/shirt4zoom.png">
+                </th>
+                <th>
+                    <img class="pic" img src="../Store Images/poster.png"><img class="zoom" img src="../Store Images/posterzoom.png">
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    Motley Coders Mask Tee
+                </td>
+                <td>Motley Coders "Shout At The Devil" Crewneck</td>
+                <td>Motley Coders Tour Poster</td>
+            </tr>
+            <tr>
+                <td>
+                    Made from high quality fabric.
+                </td>
+                <td>
+                    Comfortable cotton crewneck.
+                </td>
+                <td>Printed on high quality xerox gloss coated paper.</td>
+            </tr>
+            <tr>
+                <td>
+                    $20
+                </td>
+                <td>
+                    $25
+                </td>
+                <td>
+                    $9
+                </td>
+
+                <tr>
+                    <td>
+                        <button onclick="addToCart(3)" style="color:black">Add to Cart</button>
+                    </td>
+                    <td>
+                        <button onclick="addToCart(4)" style="color:black">Add to Cart</button>
+                    </td>
+                    <td>
+                        <button onclick="addToCart(5)" style="color:black">Add to Cart</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button" onclick="removeItem(3)" style="color:black">Remove</button>
+                    </td>
+                    <td>
+                        <button type="button" onclick="removeItem(4)" style="color:black">Remove</button>
+                    </td>
+                    <td>
+                        <button type="button" onclick="removeItem(5)" style="color:black">Remove</button>
+                    </td>
+                    <tr>
+                        <th><br>
+                            <img class="pic" img src="../Store Images/board.png"><img class="zoom" img src="../Store Images/board.png">
+                        </th>
+                        <th>
+                            <img class="pic" img src="../Store Images/tank.png"><img class="zoom" img src="../Store Images/tank.png">
+                        </th>
+                        <th>
+                            <img class="pic" img src="../Store Images/hat.png"><img class="zoom" img src="../Store Images/hat.png">
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            Motley Coders Skatedeck
+                        </td>
+                        <td>
+                            Motley Coders Girls Tank
+                        </td>
+                        <td>
+                            Motley Coders Baseball Cap
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Professional quality maple skate deck.
+                        </td>
+                        <td>
+                            100% Cotton Fabric.
+                        </td>
+                        <td>
+                            Adjustable back.
+                        </td>
+                        <tr>
+                            <td>
+                                $60
+                            </td>
+                            <td>
+                                $20
+                            </td>
+                            <td>
+                                $12
+                            </td>
+                        </tr>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button onclick="addToCart(6)" style="color:black">Add to Cart</button>
+                        </td>
+                        <td>
+                            <button onclick="addToCart(7)" style="color:black">Add to Cart</button>
+                        </td>
+                        <td>
+                            <button onclick="addToCart(8)" style="color:black">Add to Cart</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button type="button" onclick="removeItem(6)" style="color:black">Remove</button>
+                        </td>
+                        <td>
+                            <button type="button" onclick="removeItem(7)" style="color:black">Remove</button>
+                        </td>
+                        <td>
+                            <button type="button" onclick="removeItem(8)" style="color:black">Remove</button>
+                        </td>
+    </table>
+
+
+
+    <div class="fixed">
+
+        <th>
+            <h3>Cart <img src="../Store Images/cart.png">
+                <img src="../Store Images/visa.png">
+                <img src="../Store Images/mastercard.png">
+                <img src="../Store Images/paypal.png">
+
+            </h3>
+            <!-- beginning of cart -->
+
+            <div id='right'>
+
+            </div>
+
+            <button type="button"><a href="checkout.html" style="color:black">Checkout</a> <!-- checkout button -->
+
+<button type="button" onclick="removeAll()" style="color:black">Empty Cart</button>
+            <!-- empty button -->
+            <script type='text/javascript'>
+                cart = new Cart(document.getElementById('right'), items);
+            </script>
+        </th>
+    </div>
+
+
+
+
+
+    <!-- FOOTER -->
+    <br><br><br><br><br><br><br><br><br>
+    <footer class="text-center container-fluid">
+        <p class="pull-left">&copy; 2016 | &lt;MOTLEYCODERS&nbsp;/&gt;</p>
+        <ul class="pull-right" id="social">
+            <li><a href="http://www.facebook.com"><img class="img-rounded" src="images/icons/facebookicon.png" /></a></li>
+            <li><a href="http://www.twitter.com"><img class="img-rounded" src="images/icons/white-twitter-512.png" /></a></li>
+            <li><a href="http://www.instagram.com"><img class="img-rounded" src="images/icons/INSTAGRAM%20(1).png" /></a></li>
+            <li><a href="http://www.tumblr.com"><img class="img-rounded" src="images/icons/tumbler.png" /></a></li>
+        </ul>
+    </footer>
+
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-3.1.1.min.js"></script>
+
+
+
+</body>
+
+</html>
